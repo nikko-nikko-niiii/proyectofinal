@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.apiDevelopment.grupo2.proyectoFinal.model.Admin;
-import io.apiDevelopment.grupo2.proyectoFinal.service.AdminService;
+import io.apiDevelopment.grupo2.proyectoFinal.model.Company;
+import io.apiDevelopment.grupo2.proyectoFinal.service.CompanyService;
 
 @RestController
-@RequestMapping("/api/v1/admin")
-public class AdminController {
+@RequestMapping("/api/v1/company")
+public class CompanyController {
 	
 	@Autowired
-	private AdminService adminService;
+	private CompanyService companyService;
 	
-	@PostMapping("/login")
-	public ResponseEntity<Admin> getAdminByUsername(@RequestBody Admin admin){
-		return new ResponseEntity<Admin>(adminService.getAdminByUsername(admin), HttpStatus.ACCEPTED);
+	@PostMapping("/")
+	public ResponseEntity<Company> createCompany(@RequestBody Company company) {
+		return new ResponseEntity<Company>(companyService.createCompany(company), HttpStatus.CREATED);
 	}
 }

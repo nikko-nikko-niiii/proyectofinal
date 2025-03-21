@@ -1,5 +1,7 @@
 package io.apiDevelopment.grupo2.proyectoFinal.service;
 
-public interface AdminService {
+import io.apiDevelopment.grupo2.proyectoFinal.model.Admin;
 
+public interface AdminService {
+	Admin getAdminByUsername(Admin admin);
 }

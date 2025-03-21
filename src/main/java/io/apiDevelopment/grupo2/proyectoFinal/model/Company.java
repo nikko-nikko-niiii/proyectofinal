@@ -1,22 +1,26 @@
 package io.apiDevelopment.grupo2.proyectoFinal.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
-@Table(name = "admin")
-public class Admin {
-	
+@Table(name = "company")
+public class Company {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer  id;
+	private Integer id;
 	
-	private String username;
+	@Column(name = "company_name")
+	private String name;
 	
-	private String password;
+	@Column(name = "company_api_key")
+	private String apiKey;
 }
