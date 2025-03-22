@@ -4,4 +4,5 @@ import io.apiDevelopment.grupo2.proyectoFinal.model.Company;
 
 public interface CompanyService {
 	Company createCompany(Company company);
+	Company getCompanyById(Integer id);
 }

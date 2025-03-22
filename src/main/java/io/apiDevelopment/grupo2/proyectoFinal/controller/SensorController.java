@@ -23,7 +23,6 @@ public class SensorController {
 	public ResponseEntity<Sensor> createSensor(@RequestBody Sensor sensor){
 		return new ResponseEntity<Sensor>(sensorService.createSensor(sensor), HttpStatus.CREATED); 
 		
-		//prueba
 	}
 
 }

@@ -34,8 +34,8 @@ public class Sensor {
 	@Column(name = "sensor_api_key")
 	private String apiKey;
 	
-	//@ManyToOne(cascade = CascadeType.ALL)
-	//@JoinColumn(name = "id_location")
-	//private Integer id_location; --Falta la clase
-
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_location")
+	private Location location;
+	
 }
