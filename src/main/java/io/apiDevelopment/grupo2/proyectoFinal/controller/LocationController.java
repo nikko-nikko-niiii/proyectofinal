@@ -23,27 +23,27 @@ public class LocationController {
 	@Autowired
 	private LocationService locationService;
 	
-	@GetMapping("/api/v1/locations")
+	@GetMapping("/")
 	public ResponseEntity<Location> getLocations(){
 		return new ResponseEntity<Location>(locationService.getAllLocation(), HttpStatus.FOUND);
 	}
 
-	@GetMapping("/api/v1/locations/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Location> getLocationById(@PathVariable String id){
 		return new ResponseEntity<Location>(locationService.getLocationById(id), HttpStatus.FOUND);
 	}
 
-	@PutMapping("/api/v1/locations/{id}")
+	@PostMapping("/{id}")
 	public ResponseEntity<Location> createLocation(@RequestBody LocationDTO location){
 		return new ResponseEntity<Location>(locationService.createLocation(location), HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/api/v1/locations/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Location> updateLocation(@RequestBody LocationDTO location, @PathVariable String id){
 		return new ResponseEntity<Location>(locationService.updateLocation(id,location), HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("/api/v1/locations/id/{id}")
+	@DeleteMapping("/{id}")
 	public void deleteLocation(@PathVariable String id){
 		locationService.deleteLocation(id);
 	}

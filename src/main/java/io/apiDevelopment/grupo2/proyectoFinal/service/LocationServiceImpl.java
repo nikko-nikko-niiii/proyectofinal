@@ -1,8 +1,11 @@
 package io.apiDevelopment.grupo2.proyectoFinal.service;
 
+import org.springframework.stereotype.Service;
+
 import io.apiDevelopment.grupo2.proyectoFinal.controller.dto.LocationDTO;
 import io.apiDevelopment.grupo2.proyectoFinal.model.Location;
 
+@Service
 public class LocationServiceImpl implements LocationService {
 
 	@Override

@@ -27,9 +27,10 @@ public class SecurityConfig {
 		http.csrf(csrf -> csrf.disable())
 		.authorizeHttpRequests(httpRequest -> {
 			httpRequest.requestMatchers(HttpMethod.POST, "/api/v1/admin/login").permitAll();
-			httpRequest.requestMatchers(HttpMethod.POST, "/api/v1/company/").hasRole("ADMIN");
+			//httpRequest.requestMatchers(HttpMethod.POST, "/api/v1/company/").hasRole("ADMIN");
 			httpRequest.requestMatchers(HttpMethod.POST, "/api/v1/location/").hasRole("ADMIN");
 			httpRequest.requestMatchers(HttpMethod.POST, "/api/v1/sensor/").hasRole("ADMIN");
+			httpRequest.anyRequest().permitAll();
 		});
 		
 		return http.build();

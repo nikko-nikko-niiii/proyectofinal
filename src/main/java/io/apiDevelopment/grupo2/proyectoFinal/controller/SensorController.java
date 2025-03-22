@@ -16,13 +16,13 @@ import io.apiDevelopment.grupo2.proyectoFinal.service.SensorService;
 @RequestMapping("/api/v1/sensor")
 public class SensorController {
 	
-	@Autowired
-	private SensorService sensorService;
+	//@Autowired
+	//private SensorService sensorService;
 	
-	@PostMapping("/")
+	/*@PostMapping("/")
 	public ResponseEntity<Sensor> createSensor(@RequestBody Sensor sensor){
 		return new ResponseEntity<Sensor>(sensorService.createSensor(sensor), HttpStatus.CREATED); 
 		
-	}
+	}*/
 
 }
