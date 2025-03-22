@@ -1,6 +1,6 @@
 package io.apiDevelopment.grupo2.proyectoFinal.service;
 
-import io.apiDevelopment.grupo2.proyectoFinal.controller.dto.LocationDTO;
+import io.apiDevelopment.grupo2.proyectoFinal.dto.LocationDTO;
 import io.apiDevelopment.grupo2.proyectoFinal.model.Location;
 
 

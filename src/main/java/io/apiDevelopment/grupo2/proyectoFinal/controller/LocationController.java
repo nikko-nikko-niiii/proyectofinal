@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.apiDevelopment.grupo2.proyectoFinal.controller.dto.LocationDTO;
+import io.apiDevelopment.grupo2.proyectoFinal.dto.LocationDTO;
 import io.apiDevelopment.grupo2.proyectoFinal.model.Location;
 import io.apiDevelopment.grupo2.proyectoFinal.service.LocationService;
 
