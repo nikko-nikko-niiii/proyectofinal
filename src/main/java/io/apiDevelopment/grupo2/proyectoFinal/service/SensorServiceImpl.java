@@ -2,21 +2,44 @@ package io.apiDevelopment.grupo2.proyectoFinal.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorDTO;
+import io.apiDevelopment.grupo2.proyectoFinal.model.Company;
+import io.apiDevelopment.grupo2.proyectoFinal.model.Location;
 import io.apiDevelopment.grupo2.proyectoFinal.model.Sensor;
+import io.apiDevelopment.grupo2.proyectoFinal.repository.CompanyRepository;
+import io.apiDevelopment.grupo2.proyectoFinal.repository.LocationRepository;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.SensorRepository;
 
+@Service
 public class SensorServiceImpl implements SensorService{
 
 	@Autowired
 	private SensorRepository sensorRepository;
+	@Autowired
+	private LocationRepository locationRepository;
+	@Autowired 
+	private CompanyRepository companyRepository;
 	
 	@Override
 	public Sensor createSensor(SensorDTO sensor) {
-		return sensorRepository.save(new Sensor(null, sensor));
+		
+		String apiKey = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+		
+		Optional<Company> company = companyRepository.findByApiKey(apiKey);
+		
+		Optional<Location> location = locationRepository.findByIdAndCompany(sensor.getIdLocation(), company.get());
+		
+		Sensor newSensor = new Sensor(null, sensor);
+		newSensor.setApiKey(UUID.randomUUID().toString());
+		newSensor.setLocation(location.get());
+		
+		return sensorRepository.save(newSensor);
 	}
 
 	@Override
@@ -35,7 +58,8 @@ public class SensorServiceImpl implements SensorService{
 				sensor.get().getName(), 
 				sensor.get().getCategory(), 
 				sensor.get().getMeta(),
-				sensor.get().getApiKey());
+				sensor.get().getApiKey(),
+				sensor.get().getLocation().getId());
 	}
 
 	@Override

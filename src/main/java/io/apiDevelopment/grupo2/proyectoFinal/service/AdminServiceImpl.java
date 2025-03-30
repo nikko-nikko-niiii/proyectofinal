@@ -32,5 +32,5 @@ public class AdminServiceImpl implements UserDetailsService{
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		return new User(user.get().getUsername(), user.get().getPassword(), true, true, true, true, grantedAuthorities);
 	}
-
+	
 }

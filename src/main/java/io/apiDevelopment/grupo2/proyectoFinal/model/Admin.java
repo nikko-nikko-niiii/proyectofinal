@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 @Entity
 @Table(name = "admin")
-public class Admin {
+public class Admin{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +19,5 @@ public class Admin {
 	private String username;
 	
 	private String password;
+
 }

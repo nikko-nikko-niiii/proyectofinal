@@ -1,5 +1,7 @@
 package io.apiDevelopment.grupo2.proyectoFinal.service;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +17,7 @@ public class CompanyServiceImpl implements CompanyService{
 	@Override
 	public Company createCompany(Company company) {
 		
-		//TODO: Validar sesión con token JWT de Admin
-		// if()
-		// throw Unauthorized
-		if(company.getName() == null) {
-			// throw BadRequest
-			return null;
-		}
+		company.setApiKey(UUID.randomUUID().toString());
 		
 		return companyRepository.save(company);
 	}

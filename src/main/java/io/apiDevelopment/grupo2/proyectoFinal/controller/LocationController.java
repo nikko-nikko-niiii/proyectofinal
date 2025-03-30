@@ -33,8 +33,8 @@ public class LocationController {
 		return new ResponseEntity<Location>(locationService.getLocationById(id), HttpStatus.FOUND);
 	}
 
-	@PostMapping("/{id}")
-	public ResponseEntity<Location> createLocation(@RequestBody LocationDTO location){
+	@PostMapping("/")
+	public ResponseEntity<Location> createLocation(@RequestBody Location location){
 		return new ResponseEntity<Location>(locationService.createLocation(location), HttpStatus.CREATED);
 	}
 	

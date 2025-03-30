@@ -15,4 +15,6 @@ public class SensorDTO {
 	private String meta;
 	
 	private String apiKey;
+	
+	private Integer idLocation;
 }
