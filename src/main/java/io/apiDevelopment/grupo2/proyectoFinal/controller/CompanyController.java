@@ -17,7 +17,6 @@ import io.apiDevelopment.grupo2.proyectoFinal.service.CompanyService;
 @RequestMapping("/api/v1/company")
 public class CompanyController {
 	
-	
 	@Autowired
 	private CompanyService companyService;
 	
@@ -27,8 +26,4 @@ public class CompanyController {
 		return new ResponseEntity<Company>(companyService.createCompany(company), HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<Company> getCompanyById(@PathVariable Integer id){
-		return ResponseEntity.ok(companyService.getCompanyById(id));
-	}
 }

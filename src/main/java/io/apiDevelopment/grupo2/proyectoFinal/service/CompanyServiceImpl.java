@@ -22,9 +22,4 @@ public class CompanyServiceImpl implements CompanyService{
 		return companyRepository.save(company);
 	}
 
-	@Override
-	public Company getCompanyById(Integer id) {
-		return companyRepository.findById(id).get();
-	}
-
 }
