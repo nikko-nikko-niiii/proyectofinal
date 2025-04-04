@@ -30,7 +30,7 @@ public class SensorServiceImpl implements SensorService{
 	public Sensor createSensor(SensorDTO sensor) {
 		
 		String apiKey = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-		
+
 		Optional<Company> company = companyRepository.findByApiKey(apiKey);
 		
 		Optional<Location> location = locationRepository.findByIdAndCompany(sensor.getIdLocation(), company.get());
