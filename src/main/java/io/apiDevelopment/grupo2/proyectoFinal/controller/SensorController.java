@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorDTO;
-import io.apiDevelopment.grupo2.proyectoFinal.model.Sensor;
 import io.apiDevelopment.grupo2.proyectoFinal.service.SensorService;
 
 @RestController
@@ -26,27 +25,27 @@ public class SensorController {
 	private SensorService sensorService;
 	
 	@PostMapping("/")
-	public ResponseEntity<Sensor> createSensor(@RequestBody SensorDTO sensor){
-		return new ResponseEntity<Sensor>(sensorService.createSensor(sensor), HttpStatus.CREATED); 
+	public ResponseEntity<String> createSensor(@RequestBody SensorDTO sensor){
+		return new ResponseEntity<String>(sensorService.createSensor(sensor), HttpStatus.CREATED); 
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<List<Sensor>> getAllSensors(){
-		return new ResponseEntity<List<Sensor>>(sensorService.getAllSensors(), HttpStatus.OK); 
+	public ResponseEntity<List<SensorDTO>> getAllSensors(){
+		return new ResponseEntity<List<SensorDTO>>(sensorService.getAllSensors(), HttpStatus.OK); 
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<SensorDTO> getSensorById(@PathVariable Integer id){
+	public ResponseEntity<SensorDTO> getSensorById(@PathVariable Long id){
 		return new ResponseEntity<SensorDTO>(sensorService.getSensorById(id), HttpStatus.OK); 
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Sensor> updateSensor(@PathVariable Integer id, @RequestBody SensorDTO sensor){
-		return new ResponseEntity<Sensor>(sensorService.updateSensor(id, sensor), HttpStatus.OK); 
+	public ResponseEntity<SensorDTO> updateSensor(@PathVariable Long id, @RequestBody SensorDTO sensor){
+		return new ResponseEntity<SensorDTO>(sensorService.updateSensor(id, sensor), HttpStatus.OK); 
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteSensor(@PathVariable Integer id){
+	public ResponseEntity<String> deleteSensor(@PathVariable Long id){
 		return new ResponseEntity<String>(sensorService.deleteSensor(id), HttpStatus.OK); 
 	}
 }

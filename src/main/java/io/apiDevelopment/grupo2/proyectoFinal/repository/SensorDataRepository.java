@@ -10,5 +10,5 @@ import io.apiDevelopment.grupo2.proyectoFinal.model.SensorData;
 
 @Repository
 public interface SensorDataRepository extends JpaRepository<SensorData, Long>{
-	List<SensorData> findByDatetimeBetweenAndSensorIdInAndSensorLocationCompanyId(LocalDateTime startDate, LocalDateTime endDate, List<Integer> sensorIds, Integer companyId);
+	List<SensorData> findByDatetimeBetweenAndSensorIdInAndSensorLocationCompanyId(LocalDateTime startDate, LocalDateTime endDate, List<Integer> sensorIds, Long companyId);
 }

@@ -2,9 +2,8 @@ package io.apiDevelopment.grupo2.proyectoFinal.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
+import io.apiDevelopment.grupo2.proyectoFinal.dto.LocationDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,9 +27,16 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Location {
 
+	public Location (LocationDTO locationDTO) {
+		this.name = locationDTO.getName();
+		this.city = locationDTO.getCity();
+		this.country = locationDTO.getCountry();
+		this.meta = locationDTO.getMeta();
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "location_name")
 	private String name;
@@ -41,12 +47,11 @@ public class Location {
 	@Column(name = "location_meta")
 	private String meta;
 
-	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "id_company")
 	private Company company;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "location", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
 	private List<Sensor> sensors;
 	
 }

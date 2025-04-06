@@ -1,12 +1,19 @@
 package io.apiDevelopment.grupo2.proyectoFinal.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import io.apiDevelopment.grupo2.proyectoFinal.model.Sensor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
+@Data
+@NoArgsConstructor
 public class SensorDTO {
-	private Integer id;
+	
+	public SensorDTO (Sensor sensor) {
+		this.name = sensor.getName();
+		this.category = sensor.getCategory();
+		this.meta = sensor.getMeta();
+		this.locationName = sensor.getLocation().getName();
+	}
 	
 	private String name;
 	
@@ -14,7 +21,5 @@ public class SensorDTO {
 	
 	private String meta;
 	
-	private String apiKey;
-	
-	private Integer idLocation;
+	private String locationName;
 }

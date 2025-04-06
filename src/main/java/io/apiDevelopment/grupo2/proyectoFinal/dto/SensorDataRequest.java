@@ -2,12 +2,11 @@ package io.apiDevelopment.grupo2.proyectoFinal.dto;
 
 import java.util.List;
 
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
+@Data
+@NoArgsConstructor
 public class SensorDataRequest {
-	
-	private String apiKey;
-	private List<SensorDataDTO> jsonData;
-	
+	private List<SensorInputDTO> jsonData;
 }

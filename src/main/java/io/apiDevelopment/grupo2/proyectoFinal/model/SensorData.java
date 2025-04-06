@@ -1,8 +1,10 @@
 package io.apiDevelopment.grupo2.proyectoFinal.model;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
-import jakarta.persistence.CascadeType;
+import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorInputDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,17 +25,23 @@ import lombok.Setter;
 @Table(name = "sensor_data")
 public class SensorData {
 	
+	public SensorData(SensorInputDTO SensorInputDTO) {
+		this.datetime = LocalDateTime.ofInstant(Instant.ofEpochSecond(SensorInputDTO.getDatetime()), ZoneId.of("America/Santiago"));
+		this.temp = SensorInputDTO.getTemp();
+		this.humidity = SensorInputDTO.getHumidity();
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private LocalDateTime datetime;
 	
-	private double temp;
+	private Double temp;
 	
-	private double humidity;
+	private Double humidity;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "id_sensor")
 	private Sensor sensor;
 }

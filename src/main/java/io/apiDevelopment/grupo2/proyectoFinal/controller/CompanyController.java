@@ -3,14 +3,12 @@ package io.apiDevelopment.grupo2.proyectoFinal.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.apiDevelopment.grupo2.proyectoFinal.model.Company;
+import io.apiDevelopment.grupo2.proyectoFinal.dto.CompanyRequest;
 import io.apiDevelopment.grupo2.proyectoFinal.service.CompanyService;
 
 @RestController
@@ -21,9 +19,8 @@ public class CompanyController {
 	private CompanyService companyService;
 	
 	@PostMapping("/")
-	public ResponseEntity<Company> createCompany(@RequestBody Company company) {
-		
-		return new ResponseEntity<Company>(companyService.createCompany(company), HttpStatus.CREATED);
+	public ResponseEntity<String> createCompany(@RequestBody CompanyRequest companyDTO) {
+		return new ResponseEntity<String>(companyService.createCompany(companyDTO), HttpStatus.CREATED);
 	}
 	
 }

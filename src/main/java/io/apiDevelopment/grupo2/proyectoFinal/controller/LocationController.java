@@ -1,5 +1,7 @@
 package io.apiDevelopment.grupo2.proyectoFinal.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.apiDevelopment.grupo2.proyectoFinal.dto.LocationDTO;
-import io.apiDevelopment.grupo2.proyectoFinal.model.Location;
 import io.apiDevelopment.grupo2.proyectoFinal.service.LocationService;
 
 @RestController
@@ -24,28 +25,28 @@ public class LocationController {
 	private LocationService locationService;
 	
 	@GetMapping("/")
-	public ResponseEntity<Location> getLocations(){
-		return new ResponseEntity<Location>(locationService.getAllLocation(), HttpStatus.FOUND);
+	public ResponseEntity<List<LocationDTO>> getLocations(){
+		return new ResponseEntity<List<LocationDTO>>(locationService.getAllLocation(), HttpStatus.FOUND);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Location> getLocationById(@PathVariable String id){
-		return new ResponseEntity<Location>(locationService.getLocationById(id), HttpStatus.FOUND);
+	public ResponseEntity<LocationDTO> getLocationById(@PathVariable Long id){
+		return new ResponseEntity<LocationDTO>(locationService.getLocationById(id), HttpStatus.FOUND);
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<Location> createLocation(@RequestBody Location location){
-		return new ResponseEntity<Location>(locationService.createLocation(location), HttpStatus.CREATED);
+	public ResponseEntity<LocationDTO> createLocation(@RequestBody LocationDTO locationDTO){
+		return new ResponseEntity<LocationDTO>(locationService.createLocation(locationDTO), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Location> updateLocation(@RequestBody LocationDTO location, @PathVariable String id){
-		return new ResponseEntity<Location>(locationService.updateLocation(id,location), HttpStatus.CREATED);
+	public ResponseEntity<LocationDTO> updateLocation(@RequestBody LocationDTO locationDTO, @PathVariable Long id){
+		return new ResponseEntity<LocationDTO>(locationService.updateLocation(id, locationDTO), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deleteLocation(@PathVariable String id){
-		locationService.deleteLocation(id);
+	public ResponseEntity<String> deleteLocation(@PathVariable Long id){
+		return new ResponseEntity<String>(locationService.deleteLocation(id), HttpStatus.OK);
 	}
 	
 }

@@ -9,10 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorDTO;
-import io.apiDevelopment.grupo2.proyectoFinal.model.Company;
+import io.apiDevelopment.grupo2.proyectoFinal.exception.BadRequestException;
+import io.apiDevelopment.grupo2.proyectoFinal.exception.NotFoundException;
 import io.apiDevelopment.grupo2.proyectoFinal.model.Location;
 import io.apiDevelopment.grupo2.proyectoFinal.model.Sensor;
-import io.apiDevelopment.grupo2.proyectoFinal.repository.CompanyRepository;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.LocationRepository;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.SensorRepository;
 
@@ -23,57 +23,92 @@ public class SensorServiceImpl implements SensorService{
 	private SensorRepository sensorRepository;
 	@Autowired
 	private LocationRepository locationRepository;
-	@Autowired 
-	private CompanyRepository companyRepository;
 	
 	@Override
-	public Sensor createSensor(SensorDTO sensor) {
+	public String createSensor(SensorDTO sensorDTO) {
 		
 		String apiKey = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
 
-		Optional<Company> company = companyRepository.findByApiKey(apiKey);
+		Optional<Location> location = locationRepository.findByNameAndCompanyApiKey(sensorDTO.getLocationName(), apiKey);
 		
-		Optional<Location> location = locationRepository.findByIdAndCompany(sensor.getIdLocation(), company.get());
-		
-		Sensor newSensor = new Sensor(null, sensor);
-		newSensor.setApiKey(UUID.randomUUID().toString());
-		newSensor.setLocation(location.get());
-		
-		return sensorRepository.save(newSensor);
-	}
-
-	@Override
-	public List<Sensor> getAllSensors() {
-		return sensorRepository.findAll();
-	}
-
-	@Override
-	public SensorDTO getSensorById(Integer id) {
-		Optional<Sensor> sensor =  sensorRepository.findById(id);
-		if(sensor.isEmpty()) {
-			return null;
+		if(location.isEmpty()) {
+			throw new NotFoundException("Localización no encontrada.");
 		}
 		
-		return new SensorDTO(sensor.get().getId(), 
-				sensor.get().getName(), 
-				sensor.get().getCategory(), 
-				sensor.get().getMeta(),
-				sensor.get().getApiKey(),
-				sensor.get().getLocation().getId());
+		validateSensorDTO(sensorDTO);
+		
+		Sensor sensor = new Sensor(sensorDTO);
+		sensor.setApiKey(UUID.randomUUID().toString());
+		sensor.setLocation(location.get());
+		
+		sensorRepository.save(sensor);
+		
+		return "Sensor creado correctamente, la api key es: " + sensor.getApiKey();
+	}
+
+
+	@Override
+	public List<SensorDTO> getAllSensors() {
+		String apiKey = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+		List<Sensor> sensors = sensorRepository.findByLocationCompanyApiKey(apiKey);
+	
+		return sensors.stream().map((sensor) -> new SensorDTO(sensor)).toList();
 	}
 
 	@Override
-	public Sensor updateSensor(Integer id, SensorDTO newSensor) {
-		Optional<Sensor> sensor = sensorRepository.findById(id);
-		sensor.get().setCategory(newSensor.getCategory());
-		sensor.get().setName(newSensor.getName());
-		return sensorRepository.save(sensor.get());
+	public SensorDTO getSensorById(Long id) {
+		Sensor sensor = getValidatedSensor(id);
+		return new SensorDTO(sensor);
 	}
 
 	@Override
-	public String deleteSensor(Integer id) {
+	public SensorDTO updateSensor(Long id, SensorDTO sensorDTO) {
+		validateSensorDTO(sensorDTO);
+		
+		Sensor sensor = getValidatedSensor(id);
+		
+		sensor.setCategory(sensorDTO.getCategory());
+		sensor.setName(sensorDTO.getName());
+		sensor.setMeta(sensorDTO.getMeta());
+		
+		sensorRepository.save(sensor);
+		
+		return new SensorDTO(sensor);
+	}
+
+	@Override
+	public String deleteSensor(Long id) {
+		getValidatedSensor(id);
+		
 		sensorRepository.deleteById(id);
+		
 		return "Sensor "+ id + " eliminado.";
 	}
+	
+	private Sensor getValidatedSensor(Long id) {
+		String apiKey = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+		
+		Optional<Sensor> sensorOpt = sensorRepository.findByIdAndLocationCompanyApiKey(id, apiKey);
+		
+		if(sensorOpt.isEmpty()) {
+			throw new NotFoundException("No existe la localización con ese id o no esta asociado a la compañia.");
+		}
+		
+		return sensorOpt.get();
+	}
 
+	private void validateSensorDTO(SensorDTO sensorDTO) {
+		if(sensorDTO.getName() == null || sensorDTO.getName().isBlank()) {
+			throw new BadRequestException("Error: Falta el atributo name en el body.");
+		}
+		
+		if(sensorDTO.getCategory() == null || sensorDTO.getCategory().isBlank()) {
+			throw new BadRequestException("Error: Falta el atributo category en el body.");
+		}
+		
+		if(sensorDTO.getMeta() == null || sensorDTO.getMeta().isBlank()) {
+			throw new BadRequestException("Error: Falta el atributo meta en el body.");
+		}
+
+	}
 }

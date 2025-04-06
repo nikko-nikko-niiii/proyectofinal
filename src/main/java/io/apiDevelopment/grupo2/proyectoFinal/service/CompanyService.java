@@ -1,7 +1,7 @@
 package io.apiDevelopment.grupo2.proyectoFinal.service;
 
-import io.apiDevelopment.grupo2.proyectoFinal.model.Company;
+import io.apiDevelopment.grupo2.proyectoFinal.dto.CompanyRequest;
 
 public interface CompanyService {
-	Company createCompany(Company company);
+	String createCompany(CompanyRequest companyDTO);
 }

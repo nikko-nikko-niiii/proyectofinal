@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorDataDTO;
 import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorDataRequest;
-import io.apiDevelopment.grupo2.proyectoFinal.model.SensorData;
 import io.apiDevelopment.grupo2.proyectoFinal.service.SensorDataService;
 
 @RestController
@@ -24,12 +24,12 @@ public class SensorDataController {
 	private SensorDataService sensorDataService;
 	
 	@PostMapping("/")
-	public ResponseEntity<List<SensorData>> createSensorData(@RequestBody SensorDataRequest sensorData) {
-		return new ResponseEntity<List<SensorData>>(sensorDataService.createSensorData(sensorData), HttpStatus.CREATED);
+	public ResponseEntity<List<SensorDataDTO>> createSensorData(@RequestBody SensorDataRequest sensorDataRequest) {
+		return new ResponseEntity<List<SensorDataDTO>>(sensorDataService.createSensorData(sensorDataRequest), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<List<SensorData>> getSensorDataByRangeAndIds(@RequestParam Integer from, @RequestParam Integer to, @RequestParam(value = "sensor_id") String sensorIds){
-		return new ResponseEntity<List<SensorData>>(sensorDataService.getSensorDataByRangeAndIds(from, to, sensorIds), HttpStatus.FOUND);
+	public ResponseEntity<List<SensorDataDTO>> getSensorDataByRangeAndIds(@RequestParam Long from, @RequestParam Long to, @RequestParam(value = "sensor_id") String sensorIds){
+		return new ResponseEntity<List<SensorDataDTO>>(sensorDataService.getSensorDataByRangeAndIds(from, to, sensorIds), HttpStatus.FOUND);
 	}
 }

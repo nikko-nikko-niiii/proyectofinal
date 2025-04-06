@@ -1,13 +1,13 @@
 package io.apiDevelopment.grupo2.proyectoFinal.service;
 
-import io.apiDevelopment.grupo2.proyectoFinal.dto.LocationDTO;
-import io.apiDevelopment.grupo2.proyectoFinal.model.Location;
+import java.util.List;
 
+import io.apiDevelopment.grupo2.proyectoFinal.dto.LocationDTO;
 
 public interface LocationService {
-	Location getAllLocation();
-	Location getLocationById(String locationId);
-	Location createLocation(Location location);
-	Location updateLocation(String id, LocationDTO newLocation);
-	void deleteLocation(String id);
+	List<LocationDTO> getAllLocation();
+	LocationDTO getLocationById(Long locationId);
+	LocationDTO createLocation(LocationDTO locationDTO);
+	LocationDTO updateLocation(Long id, LocationDTO newLocationDTO);
+	String deleteLocation(Long id);
 }
