@@ -2,7 +2,6 @@ package io.apiDevelopment.grupo2.proyectoFinal.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.apiDevelopment.grupo2.proyectoFinal.dto.LocationDTO;
 import io.apiDevelopment.grupo2.proyectoFinal.service.LocationService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/location")
+@RequiredArgsConstructor
 public class LocationController {
-	
-	@Autowired
-	private LocationService locationService;
+	private final LocationService locationService;
 	
 	@GetMapping("/")
 	public ResponseEntity<List<LocationDTO>> getLocations(){

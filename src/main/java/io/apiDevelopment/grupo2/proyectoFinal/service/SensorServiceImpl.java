@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +14,13 @@ import io.apiDevelopment.grupo2.proyectoFinal.model.Location;
 import io.apiDevelopment.grupo2.proyectoFinal.model.Sensor;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.LocationRepository;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.SensorRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class SensorServiceImpl implements SensorService{
-
-	@Autowired
-	private SensorRepository sensorRepository;
-	@Autowired
-	private LocationRepository locationRepository;
+	private final SensorRepository sensorRepository;
+	private final LocationRepository locationRepository;
 	
 	@Override
 	public String createSensor(SensorDTO sensorDTO) {

@@ -1,10 +1,12 @@
 package io.apiDevelopment.grupo2.proyectoFinal.dto;
 
 import io.apiDevelopment.grupo2.proyectoFinal.model.Location;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class LocationDTO {
 	

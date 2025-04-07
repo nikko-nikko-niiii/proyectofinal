@@ -22,14 +22,13 @@ import io.apiDevelopment.grupo2.proyectoFinal.model.SensorData;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.CompanyRepository;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.SensorDataRepository;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.SensorRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class SensorDataServiceImpl implements SensorDataService{
-
-	@Autowired
-	private SensorDataRepository sensorDataRepository;
-	@Autowired
-	private SensorRepository sensorRepository;
+	private final SensorDataRepository sensorDataRepository;
+	private final SensorRepository sensorRepository;
 	
 	@Autowired
 	private CompanyRepository companyRepository;

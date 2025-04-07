@@ -3,7 +3,6 @@ package io.apiDevelopment.grupo2.proyectoFinal.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +13,13 @@ import io.apiDevelopment.grupo2.proyectoFinal.model.Company;
 import io.apiDevelopment.grupo2.proyectoFinal.model.Location;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.CompanyRepository;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.LocationRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class LocationServiceImpl implements LocationService {
-
-	@Autowired
-	private LocationRepository locationRepository;
-	@Autowired
-	private CompanyRepository companyRepository;
+	private final LocationRepository locationRepository;
+	private final CompanyRepository companyRepository;
 	
 	@Override
 	public List<LocationDTO> getAllLocation() {
@@ -59,16 +57,16 @@ public class LocationServiceImpl implements LocationService {
 	}
 	
 	@Override
-	public LocationDTO updateLocation(Long id, LocationDTO newLocationDTO) {
+	public LocationDTO updateLocation(Long id, LocationDTO locationDTO) {
 		
-		validateLocationDTO(newLocationDTO);
+		validateLocationDTO(locationDTO);
 		
 		Location location = getValidatedLocation(id);
 		
-		location.setName(newLocationDTO.getName());
-		location.setCity(newLocationDTO.getCity());
-		location.setCountry(newLocationDTO.getCountry());
-		location.setMeta(newLocationDTO.getMeta());
+		location.setName(locationDTO.getName());
+		location.setCity(locationDTO.getCity());
+		location.setCountry(locationDTO.getCountry());
+		location.setMeta(locationDTO.getMeta());
 
 		locationRepository.save(location);
 		

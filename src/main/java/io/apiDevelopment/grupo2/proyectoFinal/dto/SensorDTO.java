@@ -1,10 +1,12 @@
 package io.apiDevelopment.grupo2.proyectoFinal.dto;
 
 import io.apiDevelopment.grupo2.proyectoFinal.model.Sensor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class SensorDTO {
 	
@@ -16,10 +18,7 @@ public class SensorDTO {
 	}
 	
 	private String name;
-	
 	private String category;
-	
 	private String meta;
-	
 	private String locationName;
 }

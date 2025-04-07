@@ -3,7 +3,6 @@ package io.apiDevelopment.grupo2.proyectoFinal.service;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +13,13 @@ import io.apiDevelopment.grupo2.proyectoFinal.model.Admin;
 import io.apiDevelopment.grupo2.proyectoFinal.model.Company;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.AdminRepository;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.CompanyRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService{
-
-	@Autowired
-	private CompanyRepository companyRepository;
-	@Autowired 
-	private AdminRepository adminRepository;
+	private final CompanyRepository companyRepository;
+	private final AdminRepository adminRepository;
 	
 	@Override
 	public String createCompany(CompanyRequest companyRequest) {

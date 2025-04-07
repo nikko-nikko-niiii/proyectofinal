@@ -1,6 +1,5 @@
 package io.apiDevelopment.grupo2.proyectoFinal.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.apiDevelopment.grupo2.proyectoFinal.dto.CompanyRequest;
 import io.apiDevelopment.grupo2.proyectoFinal.service.CompanyService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/company")
+@RequiredArgsConstructor
 public class CompanyController {
-	
-	@Autowired
-	private CompanyService companyService;
+	private final CompanyService companyService;
 	
 	@PostMapping("/")
 	public ResponseEntity<String> createCompany(@RequestBody CompanyRequest companyDTO) {
