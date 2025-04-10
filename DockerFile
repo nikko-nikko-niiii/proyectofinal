@@ -1,0 +1,8 @@
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+#VER como hacer que se genere un .jar de la app
+#cambiar "app.jar" por .jar de la app
+COPY target/app.jar app.jar
+EXPOSE 8080
+#cambiar "app.jar" por .jar de la app
+CMD["java", "-jar" , "app.jar"]
