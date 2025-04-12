@@ -10,5 +10,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class SensorDataRequest {
+	private String apiKey;
 	private List<SensorInputDTO> jsonData;
 }
