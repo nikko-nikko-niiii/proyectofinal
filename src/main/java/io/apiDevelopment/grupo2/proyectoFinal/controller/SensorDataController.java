@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class SensorDataController {
 	private final SensorDataService sensorDataService;
 	
+
 	@PostMapping("/")
 	public ResponseEntity<List<SensorDataDTO>> createSensorData(@RequestBody SensorDataRequest sensorDataRequest) {
 		return new ResponseEntity<List<SensorDataDTO>>(sensorDataService.createSensorData(sensorDataRequest), HttpStatus.CREATED);
