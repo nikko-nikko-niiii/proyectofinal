@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
 import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorDataDTO;
 import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorDataRequest;
 import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorInputDTO;
@@ -24,6 +26,11 @@ import io.apiDevelopment.grupo2.proyectoFinal.repository.SensorDataRepository;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.SensorRepository;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Implementación del servicio {@link SensorDataService} para la gestión de datos de sensores.
+ * Contiene la lógica de negocio para la creación y consulta de datos de sensores,
+ * incluyendo la validación de entrada y la interacción con los repositorios.
+ */
 @Service
 @RequiredArgsConstructor
 public class SensorDataServiceImpl implements SensorDataService{
@@ -33,9 +40,21 @@ public class SensorDataServiceImpl implements SensorDataService{
 	@Autowired
 	private CompanyRepository companyRepository;
 	
+	/**
+     * Crea nuevos registros de datos de sensores a partir de la información proporcionada
+     * en el objeto {@link SensorDataRequest}.
+     * Valida la existencia del sensor asociado a la API Key en el contexto de seguridad
+     * y los datos individuales de cada lectura del sensor antes de persistirlos.
+     *
+     * @param sensorDataRequest El objeto que contiene los datos de los sensores a crear.
+     * @return Una lista de {@link SensorDataDTO} que representan los datos de sensores creados.
+     * @throws NotFoundException Si no se encuentra el sensor asociado a la API Key.
+     * @throws BadRequestException Si faltan atributos obligatorios en los datos del sensor.
+     */
 	@Override
 	public List<SensorDataDTO> createSensorData(SensorDataRequest sensorDataRequest) {
 		List<SensorData> sensorDataList = new ArrayList<SensorData>();
+		
 		String apiKey = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
 		
 		Optional<Sensor> sensor = sensorRepository.findByApiKey(apiKey);
@@ -57,6 +76,19 @@ public class SensorDataServiceImpl implements SensorDataService{
 		return sensorDataList.stream().map((sensorData) -> new SensorDataDTO(sensorData)).toList();
 	}
 
+	/**
+     * Obtiene una lista de datos de sensores dentro de un rango de tiempo específico
+     * y para los sensores identificados por la cadena proporcionada.
+     * Valida la existencia de la compañía asociada a la API Key en el contexto de seguridad
+     * y verifica que existan registros de sensores para los IDs proporcionados y la compañía.
+     *
+     * @param from      El timestamp de inicio del rango de tiempo (en segundos desde la época).
+     * @param to        El timestamp de fin del rango de tiempo (en segundos desde la época).
+     * @param sensorIds Una cadena que contiene los IDs de los sensores separados por comas.
+     * @return Una lista de {@link SensorDataDTO} que cumplen con los criterios de búsqueda.
+     * @throws NotFoundException Si no se encuentra la compañía asociada a la API Key
+     * o si no hay registros de sensores para los IDs y la compañía especificados.
+     */
 	@Override
 	public List<SensorDataDTO> getSensorDataByRangeAndIds(Long from, Long to, String sensorIds) {
 		LocalDateTime dateTimeFrom = transformEpochToLocalDateTime(from);
@@ -81,6 +113,12 @@ public class SensorDataServiceImpl implements SensorDataService{
 		return sensorDataList.stream().map((sensorData) -> new SensorDataDTO(sensorData)).toList();
 	}
 
+	/**
+     * Convierte una cadena de IDs de sensores separados por comas a una lista de enteros.
+     *
+     * @param str La cadena de IDs de sensores.
+     * @return Una lista de enteros representando los IDs de los sensores.
+     */
 	private List<Integer> stringToList(String str){
 		List<Integer> list = new ArrayList<Integer>();
 		for(String aux : str.split(",")) {
@@ -89,21 +127,34 @@ public class SensorDataServiceImpl implements SensorDataService{
 		return list;
 	}
 	
+	/**
+     * Convierte un timestamp de época (en segundos) a un objeto {@link LocalDateTime}
+     * con la zona horaria de América/Santiago.
+     *
+     * @param epoch El timestamp de época a convertir.
+     * @return El objeto {@link LocalDateTime} resultante.
+     */
 	private LocalDateTime transformEpochToLocalDateTime(Long epoch) {
 		return LocalDateTime.ofInstant(Instant.ofEpochSecond(epoch), ZoneId.of("America/Santiago"));
 	}
 	
+	/**
+     * Valida los atributos obligatorios del objeto {@link SensorInputDTO}.
+     * Lanza una excepción {@link BadRequestException} si el 'datetime' falta o
+     * si el mapa de 'data' es nulo o está vacío.
+     *
+     * @param sensorInputDTO El objeto {@link SensorInputDTO} a validar.
+     * @throws BadRequestException Si faltan atributos obligatorios.
+     */
 	private void validateSensorDataDTO(SensorInputDTO sensorInputDTO) {
+		
 		if(sensorInputDTO.getDatetime() == null) {
 			throw new BadRequestException("Error: Falta el atributo datetime en el body.");
 		}
 		
-		if(sensorInputDTO.getTemp() == null || sensorInputDTO.getTemp().isNaN()) {
-			throw new BadRequestException("Error: Falta el atributo temp en el body.");
+		if(sensorInputDTO.getData() == null || sensorInputDTO.getData().isEmpty()) {
+			throw new BadRequestException("Error: No se encuentran atributos para registrar.");
 		}
 		
-		if(sensorInputDTO.getHumidity() == null || sensorInputDTO.getHumidity().isNaN()) {
-			throw new BadRequestException("Error: Falta el atributo humidity en el body.");
-		}
 	}
 }
