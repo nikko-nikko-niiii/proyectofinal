@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.apiDevelopment.grupo2</groupId>
 	<artifactId>proyectoFinal</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>proyectoFinal</name>
 	<description>Proyecto final diplomado</description>
 	<url/>
@@ -70,6 +70,14 @@
 	</dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<mainClass>io.apiDevelopment.grupo2.proyectoFinal.ProyectoFinalApplication</mainClass>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

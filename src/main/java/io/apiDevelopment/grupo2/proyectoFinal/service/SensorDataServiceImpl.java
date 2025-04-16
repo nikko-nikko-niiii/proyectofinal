@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-
 import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorDataDTO;
 import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorDataRequest;
 import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorInputDTO;

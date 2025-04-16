@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -13,13 +12,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
-import io.apiDevelopment.grupo2.proyectoFinal.dto.LocationDTO;
 import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorDataRequest;
 import io.apiDevelopment.grupo2.proyectoFinal.exception.BadRequestException;
 import io.apiDevelopment.grupo2.proyectoFinal.exception.NotFoundException;
 import io.apiDevelopment.grupo2.proyectoFinal.exception.UnauthorizedException;
-import io.apiDevelopment.grupo2.proyectoFinal.security.ApiKeyAuthSensor;
-import io.apiDevelopment.grupo2.proyectoFinal.security.ApiKeyAuthToken;
 import io.apiDevelopment.grupo2.proyectoFinal.security.ApiKeyFromConsumerFilter;
 import io.apiDevelopment.grupo2.proyectoFinal.service.SensorDataService;
 import lombok.RequiredArgsConstructor;

@@ -6,7 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
-import io.apiDevelopment.grupo2.proyectoFinal.exception.NotFoundException;
 import io.apiDevelopment.grupo2.proyectoFinal.exception.UnauthorizedException;
 import io.apiDevelopment.grupo2.proyectoFinal.model.Company;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.CompanyRepository;
