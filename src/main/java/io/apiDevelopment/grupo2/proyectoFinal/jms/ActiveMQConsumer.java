@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorDataRequest;
 import io.apiDevelopment.grupo2.proyectoFinal.exception.BadRequestException;
@@ -72,11 +73,16 @@ public class ActiveMQConsumer {
 			logger.error(e.getMessage());
 		} catch (NumberFormatException  e) {
 			logger.error(e.getMessage());
-		} 
+		} catch (InvalidFormatException e) {
+			logger.error(e.getMessage());
+		}
 	}
 	
 	/**
 	 * Convierte el contenido de un {@link BytesMessage} a un {@link String} utilizando la codificación UTF-8.
+	 * Para optimizar el rendimiento, este método reutiliza un buffer de bytes interno. Si la longitud
+	 * del mensaje entrante excede la capacidad del buffer actual, se crea un nuevo buffer
+	 * del tamaño necesario.
 	 *
 	 * @param bytesMessage El mensaje de bytes JMS del cual se leerá el contenido.
 	 * @return El contenido del mensaje de bytes como un {@link String} decodificado en UTF-8.
