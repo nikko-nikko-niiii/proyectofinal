@@ -37,7 +37,8 @@ public class ActiveMQConsumer {
 	private final SensorDataService sensorDataService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(ActiveMQConsumer.class);
-	
+	private final ObjectMapper objMapper = new ObjectMapper();
+	private byte[] bytes = new byte[1024];
 	/**
      * Listener JMS que escucha mensajes en la cola "testing".
      * Intenta deserializar el mensaje JSON a un objeto {@link SensorDataRequest},
@@ -53,8 +54,6 @@ public class ActiveMQConsumer {
 	@JmsListener(destination = "tf-minera-01")
 	public void messageConsumer(BytesMessage bytesMessage) throws JsonMappingException, JsonProcessingException, JMSException {
 		try {
-			ObjectMapper objMapper = new ObjectMapper();
-			
 			String message = convertBytesToString(bytesMessage);
 			System.out.println(message);
 			SensorDataRequest sensorDataRequest = objMapper.readValue(message, SensorDataRequest.class);
@@ -84,7 +83,13 @@ public class ActiveMQConsumer {
 	 * @throws JMSException Si ocurre un error al acceder al contenido del mensaje de bytes.
 	 */
 	private String convertBytesToString(BytesMessage bytesMessage) throws JMSException  {
-		byte[] bytes = new byte[(int) bytesMessage.getBodyLength()];
+		bytesMessage.reset();
+		int bytesLength = (int) bytesMessage.getBodyLength();
+		
+		if(bytesLength > bytes.length) {
+			bytes = new byte[bytesLength];
+		}
+		
 		bytesMessage.readBytes(bytes);
 		return new String(bytes, StandardCharsets.UTF_8);
 	}
